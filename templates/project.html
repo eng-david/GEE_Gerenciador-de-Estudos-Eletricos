@@ -1,0 +1,266 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% if projectData.name %}
+Edit Project
+{% else %}
+Create New Project
+{% endif %}
+{% endblock %}
+
+{% block main %}
+
+<script>
+
+    function showProjectForm() {
+        document.getElementById("transformerForm").style.display = "none"
+        document.getElementById("itemNavShowTransformer").style.color = "gray"
+
+        document.getElementById("projectForm").style.display = "block"
+        document.getElementById("itemNavShowProject").style.color = "#0d6efd"
+
+        document.getElementById("page_id").value = "project"
+    }
+
+    function showTransformerForm() {
+        document.getElementById("projectForm").style.display = "none"
+        document.getElementById("itemNavShowProject").style.color = "gray"
+
+        document.getElementById("transformerForm").style.display = "block"
+        document.getElementById("itemNavShowTransformer").style.color = "#0d6efd"
+
+        document.getElementById("page_id").value = "transformers"
+    }
+
+    function showDiagram() {
+        document.getElementById("page_id").value = "diagram"
+        saveProject()
+    }
+
+    function saveProject() {
+        document.forms['projectFormAll'].submit();
+    }
+
+    function deleteProject() {
+        if (confirm("Delete Project? all project data will be deleted!")) {
+            document.forms['deleteForm'].submit();
+        }
+    }
+
+    function addTr() {
+        document.getElementById("add_tr").value = 1
+    }
+
+    function removeTr(id) {
+        document.getElementById("delete_tr").value = id
+    }
+
+</script>
+
+{% if go == "project" %}
+<script>
+    window.onload = showProjectForm;
+</script>
+{% elif go == "transformers" %}
+<script>
+    window.onload = showTransformerForm;
+</script>
+{% endif %}
+
+
+<ul class="nav justify-content-center">
+    <li>
+        <a class="nav-link" id="itemNavShowProject" onclick="showProjectForm()" href="#">
+            <h2>{% if projectData.name %}Edit Project{% else %}Create New Project{% endif %}</h2>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link" id="itemNavShowTransformer" onclick="showTransformerForm()" href="#">
+            <h2>Power Transformers</h2>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link" id="itemNavShowDiagram" style="color: gray" onclick="showDiagram()" href="#">
+            <h2>Diagram</h2>
+        </a>
+    </li>
+</ul>
+
+
+<div class="container w-75 mb-3">
+
+    <form name="projectFormAll" action="/project" method="post">
+        <input name="id" type="hidden" value="{{projectData.id}}">
+        <input id="page_id" name="page_id" type="hidden" value="project">
+
+        <div id="projectForm">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Project Name:</label>
+                <input class="form-control " name="name" placeholder="name" type="text" {% if projectData %}
+                    value="{{projectData.name}}" {% endif %}>
+            </div>
+
+            <!-- Customer Selector -->
+            <div class="mb-3">
+                <label for="customer_id" class="form-label">Customer:</label>
+                <select class="form-select " name="customer_id">
+                    <option disabled="" {% if not projectData.customer_id %} selected="" {% endif %}>Customer</option>
+                    {% for customer in customersData %}
+                    <option value="{{customer.id}}" {%if projectData.customer_id==customer.id %} selected="" {% endif
+                        %}>
+                        {{customer.name}}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-text">select a customer from the list above</div>
+            </div>
+
+
+            <!-- Profile Selector -->
+            <div class="mb-5">
+                <label for="profile_id" class="form-label">Electric Profile:</label>
+                <select class="form-select " name="profile_id">
+                    <option disabled="" {% if not projectData.profile_id %} selected="" {% endif %}>Profile</option>
+                    {% for profile in profilesData %}
+                    <option value="{{profile.id}}" {%if projectData.profile_id==profile.id %} selected="" {% endif %}>
+                        {{profile.name}}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-text">select an electric profile from the list above</div>
+            </div>
+
+            <div>
+                <h5 class="text-center">Site Data:</h5>
+            </div>
+
+            <div class="mb-3">
+                <label for="voltage" class="form-label">Line Voltage (kV):</label>
+                <input class="form-control " name="voltage" placeholder="0 v" type="number"
+                    value="{{projectData.voltage}}">
+            </div>
+
+            <div class="mb-3">
+                <label for="demand" class="form-label">Demand (kW):</label>
+                <input class="form-control " name="demand" placeholder="0 kw" type="number"
+                    value="{{projectData.demand}}">
+            </div>
+
+            <div class="mb-5">
+                <label for="pf" class="form-label">Power Factor:</label>
+                <input class="form-control " name="pf" placeholder="0.0" type="number" value="{{projectData.pf}}">
+            </div>
+
+            <div>
+                <h5 class="text-center">Short Circuit Fault Data:</h5>
+            </div>
+
+            <div class="mb-3">
+                <label for="tri_sc" class="form-label">Trifasic Short Circuit (A):</label>
+                <input class="form-control " name="tri_sc" placeholder="0 A" type="number"
+                    value="{{projectData.tri_sc}}">
+            </div>
+
+            <div class="mb-3">
+                <label for="bi_sc" class="form-label">Bifasic Short Circuit (A):</label>
+                <input class="form-control " name="bi_sc" placeholder="0 A" type="number" value="{{projectData.bi_sc}}">
+            </div>
+
+            <div class="mb-3">
+                <label for="lg_sc_max" class="form-label">Maximum Line Ground Short Circuit (A):</label>
+                <input class="form-control " name="lg_sc_max" placeholder="0 A" type="number"
+                    value="{{projectData.lg_sc_max}}">
+            </div>
+
+            <div class="mb-3">
+                <label for="lg_sc_min" class="form-label">Minimum Line Ground Short Circuit (A):</label>
+                <input class="form-control " name="lg_sc_min" placeholder="0 A" type="number"
+                    value="{{projectData.lg_sc_min}}">
+            </div>
+
+        </div>
+
+        <!-- Power Transformers Form -->
+        <div id="transformerForm">
+
+            <table class="w-100" style="vertical-align: bottom">
+                <tbody>
+                    {% if transformersData %}
+                    {% set ns = namespace(i = 0) %}
+                    {% for transformer in transformersData %}
+                    {% set ns.i = ns.i + 1 %}
+                    <tr>
+
+                        <td>
+                            <div>
+                                <h4 class="m-0 mt-5">transformer {{ns.i}}:</h4>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <label for="kva" class="form-label">Power (kVA):</label>
+                                <input class="form-control" name="kva_{{transformer.id}}" placeholder="0 kVA"
+                                    type="numeric" value="{{transformer.power_kva}}">
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <label for="impedance" class="form-label">Impedance (%):</label>
+                                <input class="form-control" name="impedance_{{transformer.id}}" placeholder="0 %"
+                                    type="numeric" value="{{transformer.impedance}}">
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <label for="kva" class="form-label">Type:</label>
+                                <select class="form-select " name="type_{{transformer.id}}">
+                                    <option disabled="" {% if not transformer.type %} selected="" {% endif %}>
+                                        select type</option>
+                                    <option value=1 {% if transformer.type==1 %} selected="" {% endif %}>Dry Type
+                                    </option>
+                                    <option value=2 {% if transformer.type==2 %} selected="" {% endif %}>Oil Cooled
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
+                        <td style="vertical-align: bottom">
+                            <div>
+                                <button class="btn btn-danger" onclick="removeTr( {{transformer.id}} )"
+                                    id="btnRemoveTr">X</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                    {% endif %}
+                    <tr>
+                        <td>
+                            <button class="btn btn-primary mt-3" onclick="addTr()" id="btnAddTr">Add New
+                                Transformer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input id="add_tr" name="add_tr" type="hidden" value="0">
+            <input id="delete_tr" name="delete_tr" type="hidden" value="">
+
+        </div>
+    </form>
+
+</div>
+
+<div class="mb-3 w-75 mt-5 container">
+    <button class="btn btn-primary" onclick="saveProject()" id="btnSave">Save</button>
+</div>
+
+<div class="mb-3 w-75 container" {% if not projectData %} style="display: none;" {% endif %}>
+    <button class="btn btn-danger" onclick="deleteProject()" id="btnDelete">Delete Project</button>
+</div>
+
+<div>
+    <form name="deleteForm" action="/project" method="post">
+        <input name="delete" type="hidden" value="{{projectData.id}}">
+    </form>
+</div>
+{% endblock %}

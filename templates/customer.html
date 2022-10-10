@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% if customerData %}
+Edit Customer
+{% else %}
+Register New Customer
+{% endif %}
+{% endblock %}
+
+{% block main %}
+<script>
+    function deleteCustomer() {
+        if (confirm("Delete Customer?")) {
+            document.forms['deleteForm'].submit();
+        }
+    }
+</script>
+
+<div class="mb-3 container w-75">
+
+    <form action="/customer" method="post">
+
+        <div class="mb-3">
+            <h1>
+                {% if customerData %}
+                Edit Customer:
+                {% else %}
+                Register New Customer:
+                {% endif %}
+            </h1>
+        </div>
+
+        <div>
+            <h5>Contact Data:</h5>
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input class="form-control " name="name" required="required" placeholder="name" type="text" {% if
+                customerData %} value="{{customerData.name}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input class="form-control " name="email" placeholder="email" type="text" {% if customerData %}
+                value="{{customerData.email}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number:</label>
+            <input class="form-control " name="phone" placeholder="phone number" type="text" {% if customerData %}
+                value="{{customerData.phone}}" {% endif %}>
+        </div>
+
+        <div>
+            <h5>Address:</h5>
+        </div>
+
+        <div class="mb-3">
+            <label for="zipcode" class="form-label">Zip Code:</label>
+            <input class="form-control " name="zipcode" placeholder="zip code" type="text" {% if customerData %}
+                value="{{customerData.zipcode}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="state" class="form-label">State:</label>
+            <input class="form-control " name="state" placeholder="state" type="text" {% if customerData %}
+                value="{{customerData.state}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">City:</label>
+            <input class="form-control " name="city" placeholder="city" type="text" {% if customerData %}
+                value="{{customerData.city}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="street" class="form-label">Street:</label>
+            <input class="form-control " name="street" placeholder="street" type="text" {% if customerData %}
+                value="{{customerData.street}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="district" class="form-label">District:</label>
+            <input class="form-control " name="district" placeholder="district" type="text" {% if customerData %}
+                value="{{customerData.district}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="number" class="form-label">Number:</label>
+            <input class="form-control " name="number" placeholder="number" type="text" {% if customerData %}
+                value="{{customerData.number}}" {% endif %}>
+        </div>
+
+        <div class="mb-3">
+            <label for="complement" class="form-label">Complement:</label>
+            <input class="form-control " name="complement" placeholder="complement" type="text" {% if customerData %}
+                value="{{customerData.complement}}" {% endif %}>
+        </div>
+
+        <input name="id" type="hidden" value="{{customerData.id}}">
+
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</div>
+
+<div class="mb-3 w-75 container" {% if not customerData %} style="display: none;" {% endif %}>
+    <button class="btn btn-danger" onclick="deleteCustomer()">Delete Customer</button>
+</div>
+<div>
+    <form name="deleteForm" action="/customer" method="post">
+        <input name="delete" type="hidden" value="{{customerData.id}}">
+    </form>
+</div>
+{% endblock %}

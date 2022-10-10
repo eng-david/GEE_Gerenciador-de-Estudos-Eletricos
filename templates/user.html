@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block main %}
+
+<script>
+
+    function showDeleteForm() {
+        var x = document.getElementById("deleteForm");
+        x.style.display = "block"
+
+    }
+
+    function showAlert() {
+        if (confirm("Delete account? all your projects will be deleted")) {
+            document.forms['delete'].submit();
+         }
+    }
+
+</script>
+
+
+
+<div class="mb-3 text-center">
+    <div class="mb-3">
+        <h1>Hello, {{ session["username"] }}</h1>
+    </div>
+    <div class="mb-3">
+        <a class="btn btn-primary" href="/changepassword">Change Password</a>
+    </div>
+    <div class="mb-3">
+        <a class="btn btn-primary" onclick="showDeleteForm()">Delete Account</a>
+    </div>
+    <div id="deleteForm" style="display: none;">
+        <h6>Enter your password here:</h6>
+        <form name="delete" action="/deleteaccount" method="post">
+            <input placeholder="password" id="inputPass" type="password" name="password" />
+            <a class="btn btn-danger" onclick="showAlert()">Delete Account</a>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

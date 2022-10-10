@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Projects
+{% endblock %}
+
+{% block main %}
+
+<div>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th class="text-start">
+                    <h1>Projects:</h1>
+                </th>
+                <th class="text-end"><a class="btn btn-primary" href="/project?go=project">New Project</a></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Name</th>
+                <th class="text-start">Customer</th>
+                <th class="text-end">Creation Date</th>
+                <th class="text-end">Modified Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td class="text-start"><a href="/diagram?id={{project.id}}">{{ project.name }}</a></td>
+                <td class="text-start"> {% if project.customerName %} {{project.customerName}} {% endif %} </td>
+                <td class="text-end">{{ project.createddate }}</td>
+                <td class="text-end">{{ project.modifieddate }}</td>
+                <td class="text-end"><a href="/duplicate?id={{project.id}}&ob=project">duplicate</a></td>
+                <td class="text-end"><a href="/project?id={{project.id}}&go=project">edit</a></td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+
+</div>
+{% endblock %}

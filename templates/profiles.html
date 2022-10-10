@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Profiles
+{% endblock %}
+
+{% block main %}
+
+<div>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th class="text-start">
+                    <h1>Electric Profiles:</h1>
+                </th>
+                <th class="text-end"><a class="btn btn-primary" href="/profile">New profile</a></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Name</th>
+                <th class="text-end">Creation Date</th>
+                <th class="text-end">Modified Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profile in profilesList %}
+            <tr>
+                <td class="text-start">{{ profile.name }}</td>
+                <td class="text-end">{{ profile.createddate }}</td>
+                <td class="text-end">{{ profile.modifieddate }}</td>
+                <td class="text-end"><a href="/duplicate?id={{profile.id}}&ob=profile">duplicate</a></td>
+                <td class="text-end"><a href="/profile?id={{profile.id}}">edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Customers
+{% endblock %}
+
+{% block main %}
+
+<div>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th class="text-start">
+                    <h1>Customers:</h1>
+                </th>
+                <th class="text-end"><a class="btn btn-primary" href="/customer">New customer</a></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Name</th>
+                <th class="text-end">Creation Date</th>
+                <th class="text-end">Modified Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customersList %}
+            <tr>
+                <td class="text-start">{{ customer.name }}</td>
+                <td class="text-end">{{ customer.createddate }}</td>
+                <td class="text-end">{{ customer.modifieddate }}</td>
+                <td class="text-end"><a href="/customer?id={{customer.id}}">edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</div>
+{% endblock %}

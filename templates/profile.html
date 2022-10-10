@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% if profileData %}
+Edit Profile
+{% else %}
+Register New Profile
+{% endif %}
+{% endblock %}
+
+{% block main %}
+
+<script>
+
+    function deleteProfile() {
+        if (confirm("Delete Profile?")) {
+            document.forms['deleteForm'].submit();
+        }
+    }
+</script>
+
+
+<div class="mb-3 container w-75">
+
+    <form action="/profile" method="post">
+
+        <div>
+            <h1>
+                {% if profileData %}
+                Edit Profile:
+                {% else %}
+                Register New Profile:
+                {% endif %}
+            </h1>
+        </div>
+
+
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input class="form-control w" name="name" placeholder="name" type="text" value="{{profileData.name}}">
+            <div class="form-text">profile name</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="threshold_factor" class="form-label">Pickup factor:</label>
+            <input class="form-control" name="threshold_factor" placeholder="0,0" type="numeric" step="0.01"
+                value="{{profileData.threshold_factor}}">
+            <div class="form-text">defines the (ANSI 51) pickup current</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="n_factor_threshold" class="form-label">Neutral pickup factor:</label>
+            <input class="form-control " name="n_factor_threshold" placeholder="0,0" type="numeric" step="0.01"
+                value="{{profileData.n_factor_threshold}}">
+            <div class="form-text">defines the (ANSI 51N) pickup current</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="max_n_threshold" class="form-label">Neutral maximum pickup (A):</label>
+            <input class="form-control " name="max_n_threshold" placeholder="0 A" type="number"
+                value="{{profileData.max_n_threshold}}">
+            <div class="form-text">the maximum admmited neutral pickup current</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="inansi_factor" class="form-label">Inansi factor:</label>
+            <input class="form-control " name="inansi_factor" placeholder="0,0" type="number" step="0.01"
+                value="{{profileData.inansi_factor}}">
+            <div class="form-text">defines the neutral ANSI current</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="iansi_time" class="form-label">Iansi time (s):</label>
+            <input class="form-control " name="iansi_time" placeholder="0 s" type="number"
+                value="{{profileData.iansi_time}}">
+            <div class="form-text">time in seconds for ANSI current</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="mag_oil_factor" class="form-label">Oil Cooled Transformer Magnetization factor:</label>
+            <input class="form-control " name="mag_oil_factor" placeholder="0" type="number"
+                value="{{profileData.mag_oil_factor}}">
+            <div class="form-text">defines the magnetization current of oil cooled transformers</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="mag_dry_factor" class="form-label">Dry Type Transformer Magnetization factor:</label>
+            <input class="form-control " name="mag_dry_factor" placeholder="0" type="number"
+                value="{{profileData.mag_dry_factor}}">
+            <div class="form-text">defines the magnetization current of dry type transformers</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="trip_factor" class="form-label">Tripping factor:</label>
+            <input class="form-control " name="trip_factor" placeholder="0,0" type="number" step="0.01"
+                value="{{profileData.trip_factor}}">
+            <div class="form-text">defines the tripping current (ANSI 50)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="n_trip_factor" class="form-label">Neutral tripping factor:</label>
+            <input class="form-control " name="n_trip_factor" placeholder="0,0" type="number" step="0.01"
+                value="{{profileData.n_trip_factor}}">
+            <div class="form-text">defines the neutral tripping current (ANSI 50N)
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="delay_50" class="form-label">Tripping Delay (s):</label>
+            <input class="form-control " name="delay_50" placeholder="0 s" type="number" step="0.01"
+                value="{{profileData.delay_50}}">
+            <div class="form-text">defines time-delayed-tripping</div>
+        </div>
+
+        <input name="id" type="hidden" value="{{profileData.id}}">
+
+        <button class="btn btn-primary" type="submit">Save</button>
+
+    </form>
+
+</div>
+
+<div class="mb-3 w-75 container" {% if not profileData %} style="display: none;" {% endif %}>
+    <button class="btn btn-danger" onclick="deleteProfile()">Delete profile</button>
+</div>
+
+<div>
+    <form name="deleteForm" action="/profile" method="post">
+        <input name="delete" type="hidden" value="{{profileData.id}}">
+    </form>
+</div>
+
+
+{% endblock %}

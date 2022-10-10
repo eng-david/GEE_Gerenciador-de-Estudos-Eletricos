@@ -1,0 +1,372 @@
+{% extends "layout.html" %} 
+{% block title %} 
+Diagram 
+{% endblock title %} 
+{%block main %}
+<ul class="nav justify-content-center">
+  <li>
+    <a class="nav-link" id="itemNavShowProject" style="color: gray" href="/project?id={{ diagramInfo.id }}&go=project">
+      <h2>Edit Project</h2>
+    </a>
+  </li>
+  <li>
+    <a class="nav-link" id="itemNavShowTransformer" style="color: gray"
+      href="/project?id={{ diagramInfo.id }}&go=transformers">
+      <h2>Power Transformers</h2>
+    </a>
+  </li>
+  <li>
+    <a class="nav-link" id="itemNavShowDiagram" style="color: #0d6efd" href="#">
+      <h2>Diagram</h2>
+    </a>
+  </li>
+</ul>
+<div class="container mb-3">
+  <div class="mt-5">
+    <h4>Project: {{ diagramInfo.name }}</h4>
+  </div>
+  <table class="mt-5 table table-sm table-bordered container w-50">
+    <thead>
+      <tr>
+        <th colspan="2">SUPPLY DATA:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Voltage</th>
+        <td>{{ diagramInfo.voltage }} kV</td>
+      </tr>
+      <tr>
+        <th>Power Factor</th>
+        <td>{{ diagramInfo.pf }}</td>
+      </tr>
+      <tr>
+        <th>Contract Demand</th>
+        <td>{{ diagramInfo.demand }} kW</td>
+      </tr>
+      <tr>
+        <th>Nominal Current (Inom)</th>
+        <td>{{ '%0.1f'|format(diagramInfo.inom) }} A</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="mt-5 table table-sm table-bordered container w-50">
+    <thead>
+      <tr>
+        <th colspan="3">SYMMETRICAL SHORT CIRCUIT – DELIVERY POINT:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Trifasic</th>
+        <th>Line / Ground (max.)</th>
+        <th>Line / Ground (min.)</th>
+      </tr>
+      <tr>
+        <td>{{ '%0.1f'|format(diagramInfo.tri_sc) }} A</td>
+        <td>{{ '%0.1f'|format(diagramInfo.lg_sc_max) }} A</td>
+        <td>{{ '%0.1f'|format(diagramInfo.lg_sc_min) }} A</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="mt-5 table table-sm table-bordered container w-50">
+    <thead>
+      <tr>
+        <th colspan="9">TRANSFORMERS:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th></th>
+        <th>Type</th>
+        <th>Nom. Power</th>
+        <th>Z%</th>
+        <th>Inom</th>
+        <th>Imag</th>
+        <th>Iansi</th>
+        <th>Inansi</th>
+      </tr>
+      {% set ns = namespace(i = 0) %} {% for transformer in transformersInfo %}
+      {% set ns.i = ns.i + 1 %}
+      <tr>
+        <th>{{ ns.i }}</th>
+        <td>
+          {% if transformer.type == 1 %} Dry {% elif transformer.type == 2 %}
+          Oil {% endif %}
+        </td>
+        <td>{{ transformer.power_kva }} kVA</td>
+        <td>{{ transformer.impedance }} %</td>
+        <td>{{'%0.1f'|format(transformer.in)}} A</td>
+        <td>{{'%0.1f'|format(transformer.im)}} A</td>
+        <td>{{'%0.1f'|format(transformer.iansi)}} A</td>
+        <td>{{'%0.1f'|format(transformer.inansi)}} A</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <table class="mt-5 table table-sm table-bordered container w-50">
+    <thead>
+      <tr>
+        <th colspan="2">PICKUP AND TRIPPING CURRENTS:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Pickup Current</th>
+        <td>{{ '%0.1f'|format(diagramInfo.i_th) }} A</td>
+      </tr>
+      <tr>
+        <th>Neutral Pickup Current</th>
+        <td>{{ '%0.1f'|format(diagramInfo.i_th_n) }} A</td>
+      </tr>
+      <tr>
+        <th>Inrush Current</th>
+        <td>{{ '%0.1f'|format(diagramInfo.inrush) }} A</td>
+      </tr>
+      <tr>
+        <th>Triping Current</th>
+        <td>{{ '%0.1f'|format(diagramInfo.i_trip) }} A</td>
+      </tr>
+      <tr>
+        <th>Tripping Neutral Current</th>
+        <td>{{ '%0.1f'|format(diagramInfo.i_trip_n) }} A</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-5">
+    <h4>ANSI Protection Summary:</h4>
+  </div>
+  <div id="cards" class="container w-75 mt-5">
+    <div class="row mt-5">
+      <div class="col-sm-6">
+        <div class="card bg-light shadow" style="width: 18rem">
+          <div class="card-header text-center fw-bold">50</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Tripping Current: {{ '%0.1f'|format(diagramInfo.i_trip) }} A
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card bg-light shadow" style="width: 18rem">
+          <div class="card-header text-center fw-bold">51</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Pickup Current: {{ '%0.1f'|format(diagramInfo.i_th) }} A
+            </li>
+            <li class="list-group-item">Standard: IEC</li>
+            <li class="list-group-item">Curve: Extremely Inverse</li>
+            <li class="list-group-item">
+              Time Dial: {{ '%0.2f'|format(diagramInfo.time_dial) }} s
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-sm-6">
+        <div class="card bg-light shadow" style="width: 18rem">
+          <div class="card-header text-center fw-bold">50(N)</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Tripping Current: {{ '%0.1f'|format(diagramInfo.i_trip_n) }} A
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card bg-light shadow" style="width: 18rem">
+          <div class="card-header text-center fw-bold">51(N)</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Pickup Current: {{ '%0.1f'|format(diagramInfo.i_th_n) }} A
+            </li>
+            <li class="list-group-item">Standard: IEC</li>
+            <li class="list-group-item">Curve: Extremely Inverse</li>
+            <li class="list-group-item">
+              Time Dial: {{ '%0.2f'|format(diagramInfo.time_dial) }} s
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5">
+    <h4>IDMT Curve:</h4>
+  </div>
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+  <script src="/static/chart.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"
+    integrity="sha512-Tfw6etYMUhL4RTki37niav99C6OHwMDB2iBT5S5piyHO+ltK2YX8Hjy9TXxhE1Gm/TmAV0uaykSpnHKFIAif/A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+    
+  <script>
+        
+        var dotRadius = 3
+        const data = {
+
+            datasets: [{
+                label: '50 / 51 Phase Curve',
+                pointStyle: 'line',
+                borderColor: 'red',
+                data: {{phase_50_51_curve|safe}},
+                tension: 0.5,
+                datalabels: {
+                    labels: {
+                        title: null
+                    }
+                }
+        },{
+                label: '50 / 51 Neutral Curve',
+                pointStyle: 'line',
+                borderColor: 'blue',
+                data: {{neutral_50_51_curve|safe}},
+                tension: 0.5,
+                datalabels: {
+                    labels: {
+                        title: null
+                    }
+                }
+
+        },{     {% set ns0 = namespace(i = 1) %}
+                type: 'bubble',
+                label: '({{ns0.i}}) - Nominal Current (A) = {{'%0.1f'|format(diagramInfo.inom)}}',
+                backgroundColor: 'red',
+                data: [{x: {{diagramInfo.inom}}, y: 0.01, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+
+        },{     {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) - Pickup Current (A) = {{'%0.1f'|format(diagramInfo.i_th)}}',
+                backgroundColor: 'red',
+                data: [{x: {{diagramInfo.i_th}}, y: 0.01, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+
+        },{     {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) - Neutral Pickup Current (A) = {{'%0.1f'|format(diagramInfo.i_th_n)}}',
+                backgroundColor: 'blue',
+                data: [{x: {{diagramInfo.i_th_n}}, y: 0.01, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+
+        },{     {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) - Triphasic Isc (A) = {{'%0.1f'|format(diagramInfo.tri_sc)}}',
+                backgroundColor: 'orange',
+                data: [{x: {{diagramInfo.tri_sc}}, y: 0.01, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+
+        },{     {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) - Line Ground Isc (máx) (A) = {{'%0.1f'|format(diagramInfo.lg_sc_max)}}',
+                backgroundColor: 'orange',
+                data: [{x: {{diagramInfo.lg_sc_max}}, y: 0.01, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+
+        },{     {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) - Line Ground (min) Isc (A) = {{'%0.1f'|format(diagramInfo.lg_sc_min)}}',
+                backgroundColor: 'orange',
+                data: [{x: {{diagramInfo.lg_sc_min}}, y: 0.01, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+
+        },{     {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) - Magnetization Current (A) = {{'%0.1f'|format(diagramInfo.inrush)}}',
+                backgroundColor: 'red',
+                data: [{x: {{diagramInfo.inrush}}, y: 0.1, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+        }
+        
+        {% set ns = namespace(tr_n = 0) %}
+        {%for transformer in transformersInfo%}
+
+        {% set ns.tr_n = ns.tr_n + 1 %}
+
+        ,{      {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) TR {{ns.tr_n}} Iansi current (A) = {{'%0.1f'|format(transformer.iansi)}}',
+                backgroundColor: 'red',
+                data: [{x: {{transformer.iansi}}, y: {{diagramInfo.iansi_time}}, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+
+        },{     {% set ns0.i = ns0.i + 1 %}
+                type: 'bubble',
+                label: '({{ns0.i}}) TR {{ns.tr_n}} Inansi current (A) = {{'%0.1f'|format(transformer.inansi)}}',
+                backgroundColor: 'blue',
+                data: [{x: {{transformer.inansi}}, y: {{diagramInfo.iansi_time}}, r: dotRadius}],
+                datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
+        }
+        {% endfor %}
+        ]
+    };
+
+        const config = {
+            plugins: [ChartDataLabels],
+            
+            type: 'line',
+            data: data,
+
+            options: {
+                scales: {
+                    x: {
+                        type: 'logarithmic',
+                        max: 10000,
+                        title: {
+                            display: 'true',
+                            text: 'CURRENT (A)'
+                        }
+                    },
+                    y: {
+                        type: 'logarithmic',
+                        max: 100,
+                        title: {
+                            display: 'true',
+                            text: 'TIME (s)'
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        align: 'start',
+                        labels: {
+                            usePointStyle: 'true',
+                            padding: 20,
+                        }
+                    },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'end',
+                        offset: 2,
+                        
+                        font: {
+                            weight: 'bold'
+                        },
+                    }
+                },
+
+                animations: {
+                    y: {
+                        easing: 'easeInOutElastic'
+                    }
+
+                }
+            }
+
+        };
+
+        const myChart = new Chart(document.getElementById('myChart'), config);
+  </script>
+</div>
+{% endblock %}
