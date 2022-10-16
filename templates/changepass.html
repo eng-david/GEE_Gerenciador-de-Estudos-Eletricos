@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Change Password
+Alterar Senha
 {% endblock %}
 
 {% block main %}
@@ -9,26 +9,26 @@ Change Password
 
     <form action="/changepassword" method="post">
         <div class="mb-3">
-            <h5>Change Password:</h5>
+            <h5>Alterar Senha:</h5>
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="actualpassword" placeholder="Actual password"
+            <input class="form-control mx-auto w-auto" id="password" name="actualpassword" placeholder="Senha atual"
                 type="password">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="newpassword" placeholder="New Password"
+            <input class="form-control mx-auto w-auto" id="password" name="newpassword" placeholder="Nova senha"
                 type="password">
-            <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="Confirmation"
+            <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="Repetir Senha"
                 type="password">
         </div>
-        <div class="mb-3 small">
+        <div class="mb-3 small d-none">
             <h6 style="margin: 3px"> Password Rules: </h6>
             <p style="margin: 3px"> 1. Should have at least one number. </p>
             <p style="margin: 3px"> 2. Should have at least one uppercase and one lowercase character.</p>
             <p style="margin: 3px"> 3. Should have at least one special symbol.</p>
             <p style="margin: 3px"> 4. Should be between 6 to 20 characters long.</p>
         </div>
-        <button class="btn btn-primary" type="submit">Change Password</button>
+        <button class="btn btn-primary" type="submit">Alterar Senha</button>
     </form>
 </div>
 {% endblock %}

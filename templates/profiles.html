@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Profiles
+Perfis
 {% endblock %}
 
 {% block main %}
@@ -11,9 +11,9 @@ Profiles
         <thead>
             <tr>
                 <th class="text-start">
-                    <h1>Electric Profiles:</h1>
+                    <h1>Perfis elétricos:</h1>
                 </th>
-                <th class="text-end"><a class="btn btn-primary" href="/profile">New profile</a></th>
+                <th class="text-end"><a class="btn btn-primary" href="/profile">Novo Perfil</a></th>
             </tr>
         </thead>
     </table>
@@ -23,9 +23,9 @@ Profiles
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-start">Name</th>
-                <th class="text-end">Creation Date</th>
-                <th class="text-end">Modified Date</th>
+                <th class="text-start">Nome</th>
+                <th class="text-end">Data de Criação</th>
+                <th class="text-end">Data de Modificação</th>
             </tr>
         </thead>
         <tbody>
@@ -34,8 +34,8 @@ Profiles
                 <td class="text-start">{{ profile.name }}</td>
                 <td class="text-end">{{ profile.createddate }}</td>
                 <td class="text-end">{{ profile.modifieddate }}</td>
-                <td class="text-end"><a href="/duplicate?id={{profile.id}}&ob=profile">duplicate</a></td>
-                <td class="text-end"><a href="/profile?id={{profile.id}}">edit</a></td>
+                <td class="text-end"><a href="/duplicate?id={{profile.id}}&ob=profile">duplicar</a></td>
+                <td class="text-end"><a href="/profile?id={{profile.id}}">editar</a></td>
             </tr>
             {% endfor %}
         </tbody>

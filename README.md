@@ -37,12 +37,22 @@ In the application root directory:
 
 1. Create a Virtual Environment: 
 ```sh
-python3 -m venv venv
+python -m venv venv
 ```
 
-2. Activate the Virtual Environment created in the previous step: 
+2. Activate the Virtual Environment created in the previous step:
+<br>
+
+on Linux / MacOS:
+
 ```sh
 . venv/bin/activate
+```
+
+on Windows:
+
+```sh
+. venv\Scripts\activate
 ```
 
 3. Ensure your environment has pip installed:
@@ -50,18 +60,16 @@ python3 -m venv venv
 python -m ensurepip
 ```
 
-4. Install Flask & flask_session:
+4. Install this libraries:
 ```sh
 pip install Flask
+```
+```sh
 pip install flask_session
 ```
-
-5. Install CS50 Library:
 ```sh
 pip install cs50
 ```
-
-6. Install pywebview:
 ```sh
 pip install pywebview
 ```

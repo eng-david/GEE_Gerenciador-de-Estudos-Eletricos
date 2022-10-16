@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Profile
+Menu de Usuário
 {% endblock %}
 
 {% block main %}
@@ -14,10 +14,16 @@ Profile
 
     }
 
-    function showAlert() {
-        if (confirm("Delete account? all your projects will be deleted")) {
-            document.forms['delete'].submit();
-         }
+    function showDeletionAlert() {
+        // if (confirm("Tem certeza? todos os seus projetos serão deletados")) {
+        //     document.forms['delete'].submit();
+        //  }
+        var x = document.getElementById("deletionAlert");
+        x.style.display = "block"
+    }
+
+    function deleteAccountFormSubmit(){
+        document.forms['delete'].submit();
     }
 
 </script>
@@ -26,22 +32,28 @@ Profile
 
 <div class="mb-3 text-center">
     <div class="mb-3">
-        <h1>Hello, {{ session["username"] }}</h1>
+        <h1>Olá, {{ session["username"] }}</h1>
     </div>
     <div class="mb-3">
-        <a class="btn btn-primary" href="/changepassword">Change Password</a>
+        <a class="btn btn-primary" href="/changepassword">Alterar Senha</a>
     </div>
     <div class="mb-3">
-        <a class="btn btn-primary" onclick="showDeleteForm()">Delete Account</a>
+        <a class="btn btn-primary" onclick="showDeleteForm()">Deletar Conta</a>
     </div>
-    <div id="deleteForm" style="display: none;">
-        <h6>Enter your password here:</h6>
+    
+    <div id="deleteForm" class="mb-3" style="display: none;">
+        <h6>Digite a sua senha:</h6>
         <form name="delete" action="/deleteaccount" method="post">
-            <input placeholder="password" id="inputPass" type="password" name="password" />
-            <a class="btn btn-danger" onclick="showAlert()">Delete Account</a>
-
+            <input placeholder="senha" id="inputPass" type="password" name="password" />
+            <a class="btn btn-danger" onclick="showDeletionAlert()">Deletar Conta</a>
         </form>
     </div>
+
+    <div id="deletionAlert" style="display: none;">
+        <h6>Tem certeza? todos os seus projetos serão deletados.</h6>
+        <a class="btn btn-danger" onclick="deleteAccountFormSubmit()">Deletar Conta</a>
+    </div>
+
 </div>
 
 {% endblock %}

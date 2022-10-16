@@ -1,15 +1,15 @@
 import webview
+import re
+import logging
 
 from functools import wraps
 from math import sqrt
-
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
-import re
-import logging
+
 
 logging.getLogger("cs50").disabled = False
 

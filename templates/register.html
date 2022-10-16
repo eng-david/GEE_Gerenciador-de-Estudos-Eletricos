@@ -1,34 +1,34 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Register
+Registre-se
 {% endblock %}
 
 {% block main %}
 <div class="text-center">
     <form action="/register" method="post">
         <div class="mb-3">
-            <h5>Register:</h5>
+            <h5>Registre-se:</h5>
         </div>
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username"
-                placeholder="Username" type="text">
+                placeholder="usuario" type="text">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password"
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="senha"
                 type="password">
             <input class="form-control mx-auto w-auto" id="password" name="confirmation"
-                placeholder="Password confirmation" type="password">
+                placeholder="repetir senha" type="password">
 
         </div>
-        <div class="mb-3 small">
+        <div class="mb-3 small hidden d-none">
             <h6 style="margin: 3px"> Password Rules: </h6>
             <p style="margin: 3px"> 1. Should have at least one number. </p>
             <p style="margin: 3px"> 2. Should have at least one uppercase and one lowercase character.</p>
             <p style="margin: 3px"> 3. Should have at least one special symbol.</p>
             <p style="margin: 3px"> 4. Should be between 6 to 20 characters long.</p>
         </div>
-        <button class="btn btn-primary" type="submit">Register</button>
+        <button class="btn btn-primary" type="submit">Registrar</button>
     </form>
 </div>
 {% endblock %}

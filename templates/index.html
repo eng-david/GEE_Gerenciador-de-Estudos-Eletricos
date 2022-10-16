@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Projects
+Projetos
 {% endblock %}
 
 {% block main %}
@@ -11,9 +11,9 @@ Projects
         <thead>
             <tr>
                 <th class="text-start">
-                    <h1>Projects:</h1>
+                    <h1>Projetos:</h1>
                 </th>
-                <th class="text-end"><a class="btn btn-primary" href="/project?go=project">New Project</a></th>
+                <th class="text-end"><a class="btn btn-primary" href="/project?go=project">Novo Projeto</a></th>
             </tr>
         </thead>
     </table>
@@ -23,10 +23,10 @@ Projects
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-start">Name</th>
-                <th class="text-start">Customer</th>
-                <th class="text-end">Creation Date</th>
-                <th class="text-end">Modified Date</th>
+                <th class="text-start">Nome</th>
+                <th class="text-start">Cliente</th>
+                <th class="text-end">Data de Criação</th>
+                <th class="text-end">Data de Modificação</th>
             </tr>
         </thead>
         <tbody>
@@ -36,8 +36,8 @@ Projects
                 <td class="text-start"> {% if project.customerName %} {{project.customerName}} {% endif %} </td>
                 <td class="text-end">{{ project.createddate }}</td>
                 <td class="text-end">{{ project.modifieddate }}</td>
-                <td class="text-end"><a href="/duplicate?id={{project.id}}&ob=project">duplicate</a></td>
-                <td class="text-end"><a href="/project?id={{project.id}}&go=project">edit</a></td>
+                <td class="text-end"><a href="/duplicate?id={{project.id}}&ob=project">duplicar</a></td>
+                <td class="text-end"><a href="/project?id={{project.id}}&go=project">editar</a></td>
             </tr>
             {% endfor %}
 
