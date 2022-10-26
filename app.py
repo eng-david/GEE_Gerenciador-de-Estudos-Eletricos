@@ -1,5 +1,5 @@
 import webview
-import re
+# import re
 import logging
 
 from functools import wraps
@@ -60,7 +60,7 @@ def register():
         username = request.form.get("username")
         # Ensure username was submitted
         if not username:
-            flash("must provide username", 'alert-danger')
+            flash("deve fornecer nome de usuário", 'alert-danger')
             return redirect("/register")
 
         # get user input password
@@ -69,12 +69,12 @@ def register():
         confirmation = request.form.get("confirmation")
         # Ensure password and confirmation was submitted
         if not password or not confirmation:
-            flash("must provide password", 'alert-danger')
+            flash("deve fornecer a senha", 'alert-danger')
             return redirect("/register")
 
         # Ensure password and confirmation are equal
         if not (password == confirmation):
-            flash("passwords do not match", 'alert-danger')
+            flash("senhas não coincidem", 'alert-danger')
             return redirect("/register")
 
         # Validate password with regex
@@ -82,20 +82,23 @@ def register():
         # Should have at least one uppercase and one lowercase character.
         # Should have at least one special symbol.
         # Should be between 6 to 20 characters long.
-        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+        
+        # reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+        
         # compiling regex
-        pat = re.compile(reg)
+        # pat = re.compile(reg)
+        
         # searching regex
-        mat = re.search(pat, password)
-        if not mat:
-            flash("invalid password", 'alert-danger')
-            return redirect("/register")
+        # mat = re.search(pat, password)
+        # if not mat:
+        #     flash("invalid password", 'alert-danger')
+        #     return redirect("/register")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
         # Ensure username not exists
         if len(rows) != 0:
-            flash("username already exists", 'alert-danger')
+            flash("usuário já existe", 'alert-danger')
             return redirect("/register")
 
         # Save user credentials in database
@@ -110,7 +113,7 @@ def register():
         session["username"] = username
 
         # Redirect user to home page
-        flash("Registered!", 'alert-primary')
+        flash("Registrado!", 'alert-primary')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -126,12 +129,12 @@ def login():
         # Ensure username was submitted
         if not request.form.get("username"):
             # flash error message
-            flash("must provide username", 'alert-danger')
+            flash("deve fornecer o usuário", 'alert-danger')
             return redirect("/login")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            flash("must provide password", 'alert-danger')
+            flash("deve fornecer a senha", 'alert-danger')
             return redirect("/login")
 
         # Query database for username
@@ -139,7 +142,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("invalid username and/or password", 'alert-danger')
+            flash("usuário ou senha invalidos", 'alert-danger')
             return redirect("/login")
 
         # Remember which user has logged in
@@ -178,7 +181,7 @@ def deleteaccount():
     # Ensure password was submitted
     if not password:
         # render user profile page with error
-        flash('Invalid password provided', 'alert-danger')
+        flash('senha inválida', 'alert-danger')
         return redirect("/user")
 
     # Query database for user data
@@ -186,20 +189,23 @@ def deleteaccount():
 
     # Ensure password is correct
     if not check_password_hash(rows[0]["hash"], password):
-        flash('Invalid password provided', 'alert-danger')
+        flash('senha inválida', 'alert-danger')
         return redirect("/user")
 
-    # Remove user, user's projects, customers, profiles from db
-    db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
-    db.execute("DELETE FROM projects WHERE user_id = ?", session["user_id"])
+    # Remove user's customers, profiles, transformers, projects and user from db
     db.execute("DELETE FROM customers WHERE user_id = ?", session["user_id"])
     db.execute("DELETE FROM profiles WHERE user_id = ?", session["user_id"])
+    projectsList = db.execute("SELECT id FROM projects WHERE user_id = ?", session["user_id"])
+    for project in projectsList:
+        db.execute("DELETE FROM transformers WHERE project_id = ?", project["id"])
+    db.execute("DELETE FROM projects WHERE user_id = ?", session["user_id"])
+    db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
 
     # Forget any user_id
     session.clear()
 
     # redirect to login form
-    flash("Account Deleted", 'alert-danger')
+    flash("Conta Deletada", 'alert-danger')
     return render_template("login.html")
 
 @app.route("/changepassword", methods=["GET", "POST"])
@@ -213,26 +219,26 @@ def changepassword():
         actual_password = request.form.get("actualpassword")
         # ensures actual password exists
         if not actual_password:
-            flash("must provide actual password", 'alert-danger')
+            flash("deve fornecer a senha atual", 'alert-danger')
             return redirect("/changepassword")
 
         # get user input new password
         newpassword = request.form.get("newpassword")
         # ensures new password exists
         if not newpassword:
-            flash("must provide new password", 'alert-danger')
+            flash("deve fornecer a nova senha", 'alert-danger')
             return redirect("/changepassword")
 
         # get user input confirmation
         confirmation = request.form.get("confirmation")
         # ensures confirmation exists
         if not confirmation:
-            flash("must provide confirmation", 'alert-danger')
+            flash("deve fornecer a confirmação de senha", 'alert-danger')
             return redirect("/changepassword")
 
         # Ensure password and confirmation are equal
         if not (newpassword == confirmation):
-            flash("passwords do not match", 'alert-danger')
+            flash("senhas não coincidem", 'alert-danger')
             return redirect("/changepassword")
 
         # Validate password with regex
@@ -240,28 +246,28 @@ def changepassword():
         # Should have at least one uppercase and one lowercase character.
         # Should have at least one special symbol.
         # Should be between 6 to 20 characters long.
-        reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+        # reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
         # compiling regex
-        pat = re.compile(reg)
+        # pat = re.compile(reg)
         # searching regex
-        mat = re.search(pat, newpassword)
-        if not mat:
-            flash("invalid password", 'alert-danger')
-            return redirect("/changepassword")
+        # mat = re.search(pat, newpassword)
+        # if not mat:
+        #     flash("invalid password", 'alert-danger')
+        #     return redirect("/changepassword")
 
         # Query database for username
         user = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
 
         # Validade if actual password input is correct
         if not check_password_hash(user[0]["hash"], actual_password):
-            flash("invalid actual password", 'alert-danger')
+            flash("senha atual invalida", 'alert-danger')
             return redirect("/changepassword")
 
         # Save user credentials in database
         db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(newpassword), session["user_id"])
 
         # Redirect user to home page
-        flash("Password Changed!", 'alert-primary')
+        flash("Senha alterada!", 'alert-primary')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -295,7 +301,7 @@ def project():
         if delete != None:
             db.execute("DELETE FROM projects WHERE id = ? AND user_id = ?", delete, session["user_id"])
             db.execute("DELETE FROM transformers WHERE project_id = ?", delete)
-            flash("Project Deleted", 'alert-primary')
+            flash("Projeto Deletado", 'alert-primary')
             return redirect("/")
 
         # get project id
@@ -354,7 +360,7 @@ def project():
         
         # redirect
         page_id = request.form.get("page_id")
-        flash(parameter["name"] + " saved", 'alert-primary')
+        flash(parameter["name"] + " salvo", 'alert-primary')
         if page_id == "diagram":
             return redirect("/diagram?id=" + str(id))
         return redirect("/project?id=" + str(id) + "&go=" + page_id)
@@ -420,7 +426,7 @@ def duplicate():
             db.execute("INSERT INTO transformers (project_id, power_kva, impedance, type) VALUES (?, ?, ?, ?)", new_id, transformer["power_kva"], transformer["impedance"], transformer["type"])
      
         # flash sucessful message
-        flash("Project duplicated", 'alert-primary')
+        flash("Projeto Duplicado", 'alert-primary')
         # return to index page
         return redirect("/")
     
@@ -443,7 +449,7 @@ def duplicate():
             db.execute(string, profile[item], str(new_id), str(session["user_id"]))
         
         # flash sucessful message
-        flash("Profile duplicated", 'alert-primary')
+        flash("Perfil Duplicado", 'alert-primary')
         # return to index page
         return redirect("/profiles")
 
@@ -475,7 +481,7 @@ def customer():
         if delete != None:
             db.execute("DELETE FROM customers WHERE id = ? AND user_id = ?", delete, session["user_id"])
             db.execute("UPDATE projects SET customer_id = NULL WHERE customer_id = ? AND user_id = ?", delete, session["user_id"])
-            flash("Customer Deleted", 'alert-primary')
+            flash("Cliente Deletado", 'alert-primary')
             return redirect("/customers")
             
         parameter_list = ["name", "email", "phone", "zipcode", "state", "city", "street", "district", "number", "complement"]
@@ -503,7 +509,7 @@ def customer():
             db.execute(string, parameter[item], str(id), str(session["user_id"]))
 
         # redirect
-        flash(parameter["name"] + " saved", 'alert-primary')
+        flash(parameter["name"] + " salvo", 'alert-primary')
         return redirect("/customers")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -541,7 +547,7 @@ def profile():
         if delete != None:
             db.execute("DELETE FROM profiles WHERE id = ? and user_id = ?", delete, session["user_id"])
             db.execute("UPDATE projects SET profile_id = NULL where profile_id = ? and user_id = ?", delete, session["user_id"])
-            flash("Profile Deleted", 'alert-primary')
+            flash("Perfil Deletado", 'alert-primary')
             return redirect("/profiles")
         
         parameter_list = ["name", "threshold_factor", "n_factor_threshold", "max_n_threshold", "inansi_factor", "iansi_time", "mag_oil_factor", "mag_dry_factor", "trip_factor", "n_trip_factor", "delay_50"]
@@ -568,7 +574,7 @@ def profile():
             string = "UPDATE profiles SET " + item + " = ? WHERE id = ? AND user_id = ?"
             db.execute(string, parameter[item], str(id), str(session["user_id"]))
 
-        flash(parameter["name"] + " saved", 'alert-primary')
+        flash(parameter["name"] + " salvo", 'alert-primary')
         return redirect("/profiles")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -597,7 +603,7 @@ def diagram():
     profile_id = projectData["profile_id"]
     # ensures profile exists
     if not profile_id:
-        flash("Must provide a profile", 'alert-danger')
+        flash("Deve fornecer um perfil", 'alert-danger')
         return redirect("project?id=" + id + "&go=project")
     profileData = db.execute("SELECT threshold_factor, n_factor_threshold, max_n_threshold, inansi_factor, iansi_time, mag_oil_factor, mag_dry_factor, trip_factor, n_trip_factor, delay_50 FROM profiles WHERE id = ? AND user_id = ?", profile_id, session["user_id"])[0]
 
@@ -605,7 +611,7 @@ def diagram():
     transformersData = db.execute("SELECT id, power_kva, impedance, type FROM transformers WHERE project_id = ?", id)
     # ensures at least 1 transformer exists
     if len(transformersData) == 0:
-        flash("Must provide at least 1 transformer", 'alert-danger')
+        flash("Deve fornecer pelo menos 1 transformador", 'alert-danger')
         return redirect("project?id=" + id + "&go=transformers")
 
 

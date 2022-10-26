@@ -2,19 +2,22 @@
 
 {% block title %}
 {% if customerData %}
-Edit Customer
+Editar Cliente
 {% else %}
-Register New Customer
+Cadastrar Novo Cliente
 {% endif %}
 {% endblock %}
 
 {% block main %}
 <script>
-    function deleteCustomer() {
-        if (confirm("Delete Customer?")) {
-            document.forms['deleteForm'].submit();
-        }
+    function showDeleteCustomerAlert() {
+        var x = document.getElementById("deletionAlert");
+        x.style.display = "block"
     }
+    function deleteCustomerFormSubmit(){
+        document.forms['deleteForm'].submit();
+    }
+
 </script>
 
 <div class="mb-3 container w-75">
@@ -24,20 +27,20 @@ Register New Customer
         <div class="mb-3">
             <h1>
                 {% if customerData %}
-                Edit Customer:
+                Editar Cliente:
                 {% else %}
-                Register New Customer:
+                Cadastrar Novo Cliente:
                 {% endif %}
             </h1>
         </div>
 
         <div>
-            <h5>Contact Data:</h5>
+            <h5>Dados de Contato:</h5>
         </div>
 
         <div class="mb-3">
-            <label for="name" class="form-label">Name:</label>
-            <input class="form-control " name="name" required="required" placeholder="name" type="text" {% if
+            <label for="name" class="form-label">Nome:</label>
+            <input class="form-control " name="name" required="required" placeholder="nome" type="text" {% if
                 customerData %} value="{{customerData.name}}" {% endif %}>
         </div>
 
@@ -48,66 +51,72 @@ Register New Customer
         </div>
 
         <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number:</label>
-            <input class="form-control " name="phone" placeholder="phone number" type="text" {% if customerData %}
+            <label for="phone" class="form-label">Telefone:</label>
+            <input class="form-control " name="phone" placeholder="0000-0000" type="text" {% if customerData %}
                 value="{{customerData.phone}}" {% endif %}>
         </div>
 
         <div>
-            <h5>Address:</h5>
+            <h5>Endereço:</h5>
         </div>
 
         <div class="mb-3">
-            <label for="zipcode" class="form-label">Zip Code:</label>
-            <input class="form-control " name="zipcode" placeholder="zip code" type="text" {% if customerData %}
+            <label for="zipcode" class="form-label">CEP:</label>
+            <input class="form-control " name="zipcode" placeholder="00000-000" type="text" {% if customerData %}
                 value="{{customerData.zipcode}}" {% endif %}>
         </div>
 
         <div class="mb-3">
-            <label for="state" class="form-label">State:</label>
-            <input class="form-control " name="state" placeholder="state" type="text" {% if customerData %}
+            <label for="state" class="form-label">Estado:</label>
+            <input class="form-control " name="state" placeholder="estado" type="text" {% if customerData %}
                 value="{{customerData.state}}" {% endif %}>
         </div>
 
         <div class="mb-3">
-            <label for="city" class="form-label">City:</label>
-            <input class="form-control " name="city" placeholder="city" type="text" {% if customerData %}
+            <label for="city" class="form-label">Cidade:</label>
+            <input class="form-control " name="city" placeholder="cidade" type="text" {% if customerData %}
                 value="{{customerData.city}}" {% endif %}>
         </div>
 
         <div class="mb-3">
-            <label for="street" class="form-label">Street:</label>
-            <input class="form-control " name="street" placeholder="street" type="text" {% if customerData %}
+            <label for="street" class="form-label">Rua:</label>
+            <input class="form-control " name="street" placeholder="rua" type="text" {% if customerData %}
                 value="{{customerData.street}}" {% endif %}>
         </div>
 
         <div class="mb-3">
-            <label for="district" class="form-label">District:</label>
-            <input class="form-control " name="district" placeholder="district" type="text" {% if customerData %}
+            <label for="district" class="form-label">Bairro:</label>
+            <input class="form-control " name="district" placeholder="bairro" type="text" {% if customerData %}
                 value="{{customerData.district}}" {% endif %}>
         </div>
 
         <div class="mb-3">
-            <label for="number" class="form-label">Number:</label>
-            <input class="form-control " name="number" placeholder="number" type="text" {% if customerData %}
+            <label for="number" class="form-label">Numero:</label>
+            <input class="form-control " name="number" placeholder="numero" type="text" {% if customerData %}
                 value="{{customerData.number}}" {% endif %}>
         </div>
 
         <div class="mb-3">
-            <label for="complement" class="form-label">Complement:</label>
-            <input class="form-control " name="complement" placeholder="complement" type="text" {% if customerData %}
+            <label for="complement" class="form-label">Complemento:</label>
+            <input class="form-control " name="complement" placeholder="complemento" type="text" {% if customerData %}
                 value="{{customerData.complement}}" {% endif %}>
         </div>
 
         <input name="id" type="hidden" value="{{customerData.id}}">
 
-        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-primary" type="submit">Salvar</button>
     </form>
 </div>
 
 <div class="mb-3 w-75 container" {% if not customerData %} style="display: none;" {% endif %}>
-    <button class="btn btn-danger" onclick="deleteCustomer()">Delete Customer</button>
+    <button class="btn btn-danger" onclick="showDeleteCustomerAlert()">Apagar Cliente</button>
 </div>
+
+<div id="deletionAlert" class="mb-3 w-75 container" style="display: none;">
+    <h6>Tem certeza? o cliente será deletado.</h6>
+    <a class="btn btn-danger" onclick="deleteCustomerFormSubmit()">Apagar Cliente</a>
+</div>
+
 <div>
     <form name="deleteForm" action="/customer" method="post">
         <input name="delete" type="hidden" value="{{customerData.id}}">
