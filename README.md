@@ -1,66 +1,54 @@
-# Electrical Project Manager
+# Gerenciador de Estudos Elétricos
 
-#### Video Demo:  https://www.youtube.com/watch?v=avjYKTV_CRg
+## Descrição:
 
-## Description:
-This web app can be used to generate and manage electrical studies and projects.
+Este aplicativo é destinado a profissionais do setor de eletricidade e permite o desenvolvimento de projetos e estudos elétricos relacionados a média e alta tensão.
 
-In my work routine as an electrical engineer, I develop projects related to high voltage in which detailed studies are required. So I created this app that serves as a tool to facilitate this work.
-
-This app is intended for technicians and engineers and allows the development of their electrical projects, and from there automatically generates an analysis regarding the ANSI point of transformers, ANSI 50 (Instantaneous Overcurrent Relay) / 51 (AC Time Overcurrent Relay) protections, the graph of the IEC IDMT (Inverse Definite Minimum Time) curve, and coordination of protections, according, but not limited, to the standards:
+A partir dos dados de fornecimento o app gera automaticamente a análise relacionada aos pontos ANSI dos transformadores, corrente instantânea de fase e neutro (ANSI 50/50N), corrente de sobrecarga de fase e neutro (ANSI 51/51N) e a curva do coordenograma com todos os pontos plotados, de acordo, mas não limitado, as normas:
 - IEC 60255: Measuring relays and protection equipment
 - IEEE C57.109: Guide For Liquid-Immersed Transformers Through-Fault-Current Duration
-  
-<br>
-  
-## Built With:
-- `Python`
-- `Flask Web Framework`
-- `Jinja`
-- `SQLite`
-- `chart.js`
-
+ 
 <br>
 
-## Directory structure:
-- The **static** folder contains the static CSS, Javascript and image files;
-- The **templates** folder contains the HTML templates powered by Jinja template engine and chart.js to make the HTML-based charts.;
-- The **app.py** file is the main file of the app and it uses Flask web framework to route the web pages and do the backend;
--  The **electric.db** file is an SQLite database where is stored all users' auth and projects data. 
+## Estrtura de Diretórios:
+- Pasta **static** contém os arquivos estáticos de CSS, Javascript, e imagens;
+- Pasta **templates** contém os arquivos HTML, desenvolvidos com Jinja template engine e chart.js para plotar o coordenograma;
+- Arquivo **app.py** é o arquivo principal do projeto, usa o framework Flask para o roteamento das paginas e backend;
+-  Arquivo **electric.db** é o banco de dados SQLite que armazena todos os dados da aplicação incluindo a autenticação de usuários e dados de projetos. 
 
 <br>
 
 
-## Getting Started:
-First is necessary to have python installed on your machine.<br>
-In the application root directory:
+## Instalação:
+Primeiramente é necessário ter o python instalado em seu computador.<br>
+No diretório raiz da aplicação:
 
-1. Create a Virtual Environment: 
+1. Criar um ambiente virtual: 
 ```sh
 python -m venv venv
 ```
 
-2. Activate the Virtual Environment created in the previous step:
+2. Ativar o ambiente virtual criado na etapa anterior:
 <br>
 
-on Linux / MacOS:
+Linux / MacOS:
 
 ```sh
 . venv/bin/activate
 ```
 
-on Windows:
+Windows:
 
 ```sh
 . venv\Scripts\activate
 ```
 
-3. Ensure your environment has pip installed:
+3. Garantir que o ambiente tem o pip instalado:
 ```sh
 python -m ensurepip
 ```
 
-4. Install this libraries:
+4. Instalar as bibliotecas:
 ```sh
 pip install Flask
 ```
@@ -73,31 +61,37 @@ pip install cs50
 ```sh
 pip install pywebview
 ```
-<br>
 
-## Usage:
-With all prerequisites satisfied you can run the application with:
+5. Iniciar o aplicativo:
 ```sh
 flask run
 ```
+A partir daí a janela do aplicativo será aberta.
 
 <br>
 
-If successful, you should see in the terminal the local address which the server is running, in your browser go to this address.
+## Utilização:
 
-At the first use, you have to register, choose a username and password, the password must meet the prerequisites shown on the page.
+No primeiro uso é necessário se registrar com um usuário e senha.
 
-After logging in you will be able to create your first project. To create a project is necessary first an electric profile, go to the **profiles** page and create a new profile. 
+Para criar o primeiro projeto é necessário ter um perfil elétrico, va a pagina **perfis** e crie um novo perfil. O perfil vai definir as constantes de cálculo, depois de preencher todos os campos prossiga para a página **projetos** e crie um novo projeto.
 
-The profile will define the calculation constants, after filling all the fields go to the **projects** page and create a new project. 
+Na criação do projeto é obrigatório selecionar um perfil e informar a tensão, demanda e fator de potência, a seleção de cliente é opcional, caso deseje é possível criar um novo cliente na pagina **clientes**. A definição de correntes de curto circuito é opcional, se não forem informadas não será possível analisar a coordenação das proteções relacionadas a essas correntes.
 
-To properly create a project is obligatory selecting a profile, setting the voltage, demand and power factor, you will be able to select the profile you just created, selecting a customer is optional, if you want you can create one on the **customers** page. Setting the fault data is optional, if not set you won't be able to analyze the coordination of protection related to it.
+A próxima pagina define os transformadores do projeto, clique em **novo transformador**, é possível adicionar quantos transformadores desejar, para cada um é obrigatório informar a potência nominal, impedância e tipo. É necessário pelo menos um transformador para prosseguir para a próxima página.
 
-On the next page, you should define the power transformers, click on **add new transformer**, you can add how many you want, setting the power, impedance and type for each is obligatory, is necessary at least one transformer defined to proceed to the next page.
+Depois de salvar o projeto, é possível prosseguir para a pagina **coordenograma**, esta pagina mostra as informações compiladas relacionadas a análise elétrica do projeto.
 
-After saving the project you be able to proceed to **Diagram** page, this page shows the compiled information related to the electrical analysis on the project.
+Está incluso o calculo do ponto ANSI de cada transformador, as correntes nominais e de magnetização, a análise relacionada as correntes instantâneas (ANSI 50/50N) e sobrecorrente de fase e neutro (ANSI 51/51N), e a curva do coordenograma da proteção.
 
-It includes the calculation of the ANSI point of each transformer, the nominal and magnetization currents, the analysis regarding the ANSI 50 (Instantaneous Overcurrent Relay) and 51 (AC Time Overcurrent Relay) protections, trip and pickup currents, and the graph of the IEC IDMT curve.
-
+<br>
+  
+## Tecnologias Utilizadas:
+- `Python`
+- `Flask Web Framework`
+- `Jinja`
+- `SQLite`
+- `chart.js`
+- `Python Web View`
 
 
