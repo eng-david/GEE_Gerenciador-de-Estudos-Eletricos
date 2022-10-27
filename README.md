@@ -1,6 +1,6 @@
 # Gerenciador de Estudos Elétricos
 
-<p align='center'><img src='Logo/GEE_logo_md.png' width=240 alt='GEE logo'/></p>
+<p align='center'><img src='Logo/GEE_Logo_md.png' width=240 alt='GEE logo'/></p>
 
 ## Descrição:
 
