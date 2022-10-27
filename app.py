@@ -142,7 +142,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("usuário ou senha invalidos", 'alert-danger')
+            flash("usuário ou senha inválidos", 'alert-danger')
             return redirect("/login")
 
         # Remember which user has logged in
@@ -425,7 +425,7 @@ def duplicate():
         for transformer in transformers:
             db.execute("INSERT INTO transformers (project_id, power_kva, impedance, type) VALUES (?, ?, ?, ?)", new_id, transformer["power_kva"], transformer["impedance"], transformer["type"])
      
-        # flash sucessful message
+        # flash successful message
         flash("Projeto Duplicado", 'alert-primary')
         # return to index page
         return redirect("/")
@@ -448,7 +448,7 @@ def duplicate():
             string = "UPDATE profiles SET " + item + " = ? WHERE id = ? AND user_id = ?"
             db.execute(string, profile[item], str(new_id), str(session["user_id"]))
         
-        # flash sucessful message
+        # flash successful message
         flash("Perfil Duplicado", 'alert-primary')
         # return to index page
         return redirect("/profiles")
@@ -639,12 +639,12 @@ def diagram():
 
     # calculate nominal current
     diagramInfo["inom"] = diagramInfo["demand"] / ( diagramInfo["voltage"] * sqrt(3) * diagramInfo["pf"])
-    # calculata threshold current
+    # calculate threshold current
     diagramInfo["i_th"] = diagramInfo["inom"] * diagramInfo["threshold_factor"]
-    # calculata neutral threshold current
+    # calculate neutral threshold current
     diagramInfo["i_th_n"] = diagramInfo["i_th"] * diagramInfo["n_factor_threshold"]
     
-    # calculata inrush current
+    # calculate inrush current
     bigger_im = 0
     tr_id = 0
     # get bigger im

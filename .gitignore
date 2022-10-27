@@ -1,5 +1,6 @@
 venv/
 flask_session/
 __pycache__/
+.vscode/
 .DS_Store
 db tables.txt

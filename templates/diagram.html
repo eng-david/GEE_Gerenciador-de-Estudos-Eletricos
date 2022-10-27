@@ -1,51 +1,51 @@
 {% extends "layout.html" %} 
 {% block title %} 
-Diagram 
+Coordenograma 
 {% endblock title %} 
 {%block main %}
 <ul class="nav justify-content-center">
   <li>
     <a class="nav-link" id="itemNavShowProject" style="color: gray" href="/project?id={{ diagramInfo.id }}&go=project">
-      <h2>Edit Project</h2>
+      <h2>Editar Projeto</h2>
     </a>
   </li>
   <li>
     <a class="nav-link" id="itemNavShowTransformer" style="color: gray"
       href="/project?id={{ diagramInfo.id }}&go=transformers">
-      <h2>Power Transformers</h2>
+      <h2>Transformadores</h2>
     </a>
   </li>
   <li>
     <a class="nav-link" id="itemNavShowDiagram" style="color: #0d6efd" href="#">
-      <h2>Diagram</h2>
+      <h2>Coordenograma</h2>
     </a>
   </li>
 </ul>
 <div class="container mb-3">
   <div class="mt-5">
-    <h4>Project: {{ diagramInfo.name }}</h4>
+    <h4>Projeto: {{ diagramInfo.name }}</h4>
   </div>
   <table class="mt-5 table table-sm table-bordered container w-50">
     <thead>
       <tr>
-        <th colspan="2">SUPPLY DATA:</th>
+        <th colspan="2">DADOS DE FORNECIMENTO:</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th>Voltage</th>
+        <th>Tensão</th>
         <td>{{ diagramInfo.voltage }} kV</td>
       </tr>
       <tr>
-        <th>Power Factor</th>
+        <th>Fator de Potência</th>
         <td>{{ diagramInfo.pf }}</td>
       </tr>
       <tr>
-        <th>Contract Demand</th>
+        <th>Demanda Contratada</th>
         <td>{{ diagramInfo.demand }} kW</td>
       </tr>
       <tr>
-        <th>Nominal Current (Inom)</th>
+        <th>Corrente Nominal (Inom)</th>
         <td>{{ '%0.1f'|format(diagramInfo.inom) }} A</td>
       </tr>
     </tbody>
@@ -53,14 +53,14 @@ Diagram
   <table class="mt-5 table table-sm table-bordered container w-50">
     <thead>
       <tr>
-        <th colspan="3">SYMMETRICAL SHORT CIRCUIT – DELIVERY POINT:</th>
+        <th colspan="3">CURTO CIRCUITO SIMÉTRICO - PONTO DE ENTREGA:</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th>Trifasic</th>
-        <th>Line / Ground (max.)</th>
-        <th>Line / Ground (min.)</th>
+        <th>Trifásico</th>
+        <th>Fase / Terra (max.)</th>
+        <th>Fase / Terra (min.)</th>
       </tr>
       <tr>
         <td>{{ '%0.1f'|format(diagramInfo.tri_sc) }} A</td>
@@ -72,14 +72,14 @@ Diagram
   <table class="mt-5 table table-sm table-bordered container w-50">
     <thead>
       <tr>
-        <th colspan="9">TRANSFORMERS:</th>
+        <th colspan="9">TRANSFORMADORES:</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <th></th>
-        <th>Type</th>
-        <th>Nom. Power</th>
+        <th>Tipo</th>
+        <th>Pot. Nom.</th>
         <th>Z%</th>
         <th>Inom</th>
         <th>Imag</th>
@@ -91,8 +91,8 @@ Diagram
       <tr>
         <th>{{ ns.i }}</th>
         <td>
-          {% if transformer.type == 1 %} Dry {% elif transformer.type == 2 %}
-          Oil {% endif %}
+          {% if transformer.type == 1 %} a seco {% elif transformer.type == 2 %}
+          a óleo {% endif %}
         </td>
         <td>{{ transformer.power_kva }} kVA</td>
         <td>{{ transformer.impedance }} %</td>
@@ -107,34 +107,34 @@ Diagram
   <table class="mt-5 table table-sm table-bordered container w-50">
     <thead>
       <tr>
-        <th colspan="2">PICKUP AND TRIPPING CURRENTS:</th>
+        <th colspan="2">CORRENTES DE PARTIDA E INSTANTÂNEA:</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th>Pickup Current</th>
+        <th>Corrente de Partida</th>
         <td>{{ '%0.1f'|format(diagramInfo.i_th) }} A</td>
       </tr>
       <tr>
-        <th>Neutral Pickup Current</th>
+        <th>Corrente de Partida de Neutro</th>
         <td>{{ '%0.1f'|format(diagramInfo.i_th_n) }} A</td>
       </tr>
       <tr>
-        <th>Inrush Current</th>
+        <th>Corrente de Inrush</th>
         <td>{{ '%0.1f'|format(diagramInfo.inrush) }} A</td>
       </tr>
       <tr>
-        <th>Triping Current</th>
+        <th>Corrente Instantânea</th>
         <td>{{ '%0.1f'|format(diagramInfo.i_trip) }} A</td>
       </tr>
       <tr>
-        <th>Tripping Neutral Current</th>
+        <th>Corrente Instantânea de Neutro</th>
         <td>{{ '%0.1f'|format(diagramInfo.i_trip_n) }} A</td>
       </tr>
     </tbody>
   </table>
   <div class="mt-5">
-    <h4>ANSI Protection Summary:</h4>
+    <h4>Resumo Proteções ANSI:</h4>
   </div>
   <div id="cards" class="container w-75 mt-5">
     <div class="row mt-5">
@@ -143,7 +143,7 @@ Diagram
           <div class="card-header text-center fw-bold">50</div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              Tripping Current: {{ '%0.1f'|format(diagramInfo.i_trip) }} A
+              Corrente Instantânea: {{ '%0.1f'|format(diagramInfo.i_trip) }} A
             </li>
           </ul>
         </div>
@@ -153,12 +153,12 @@ Diagram
           <div class="card-header text-center fw-bold">51</div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              Pickup Current: {{ '%0.1f'|format(diagramInfo.i_th) }} A
+              Corrente de Partida: {{ '%0.1f'|format(diagramInfo.i_th) }} A
             </li>
-            <li class="list-group-item">Standard: IEC</li>
-            <li class="list-group-item">Curve: Extremely Inverse</li>
+            <li class="list-group-item">Norma: IEC</li>
+            <li class="list-group-item">Curva: Extremamente Inversa</li>
             <li class="list-group-item">
-              Time Dial: {{ '%0.2f'|format(diagramInfo.time_dial) }} s
+              Dial de Tempo: {{ '%0.2f'|format(diagramInfo.time_dial) }} s
             </li>
           </ul>
         </div>
@@ -170,7 +170,7 @@ Diagram
           <div class="card-header text-center fw-bold">50(N)</div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              Tripping Current: {{ '%0.1f'|format(diagramInfo.i_trip_n) }} A
+              Corrente Instantânea: {{ '%0.1f'|format(diagramInfo.i_trip_n) }} A
             </li>
           </ul>
         </div>
@@ -180,12 +180,12 @@ Diagram
           <div class="card-header text-center fw-bold">51(N)</div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              Pickup Current: {{ '%0.1f'|format(diagramInfo.i_th_n) }} A
+              Corrente de Partida: {{ '%0.1f'|format(diagramInfo.i_th_n) }} A
             </li>
-            <li class="list-group-item">Standard: IEC</li>
-            <li class="list-group-item">Curve: Extremely Inverse</li>
+            <li class="list-group-item">Norma: IEC</li>
+            <li class="list-group-item">Curva: Extremamente Inversa</li>
             <li class="list-group-item">
-              Time Dial: {{ '%0.2f'|format(diagramInfo.time_dial) }} s
+              Dial de Tempo: {{ '%0.2f'|format(diagramInfo.time_dial) }} s
             </li>
           </ul>
         </div>
@@ -193,7 +193,7 @@ Diagram
     </div>
   </div>
   <div class="mt-5">
-    <h4>IDMT Curve:</h4>
+    <h4>Coordenograma:</h4>
   </div>
   <div>
     <canvas id="myChart"></canvas>
@@ -211,7 +211,7 @@ Diagram
         const data = {
 
             datasets: [{
-                label: '50 / 51 Phase Curve',
+                label: '50 / 51 Curva de Fase',
                 pointStyle: 'line',
                 borderColor: 'red',
                 data: {{phase_50_51_curve|safe}},
@@ -222,7 +222,7 @@ Diagram
                     }
                 }
         },{
-                label: '50 / 51 Neutral Curve',
+                label: '50 / 51 Curva de Neutro',
                 pointStyle: 'line',
                 borderColor: 'blue',
                 data: {{neutral_50_51_curve|safe}},
@@ -235,49 +235,49 @@ Diagram
 
         },{     {% set ns0 = namespace(i = 1) %}
                 type: 'bubble',
-                label: '({{ns0.i}}) - Nominal Current (A) = {{'%0.1f'|format(diagramInfo.inom)}}',
+                label: '({{ns0.i}}) - Corrente Nominal (A) = {{'%0.1f'|format(diagramInfo.inom)}}',
                 backgroundColor: 'red',
                 data: [{x: {{diagramInfo.inom}}, y: 0.01, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
 
         },{     {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) - Pickup Current (A) = {{'%0.1f'|format(diagramInfo.i_th)}}',
+                label: '({{ns0.i}}) - Corrente de Partida (A) = {{'%0.1f'|format(diagramInfo.i_th)}}',
                 backgroundColor: 'red',
                 data: [{x: {{diagramInfo.i_th}}, y: 0.01, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
 
         },{     {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) - Neutral Pickup Current (A) = {{'%0.1f'|format(diagramInfo.i_th_n)}}',
+                label: '({{ns0.i}}) - Corrente de Partida de Neutro (A) = {{'%0.1f'|format(diagramInfo.i_th_n)}}',
                 backgroundColor: 'blue',
                 data: [{x: {{diagramInfo.i_th_n}}, y: 0.01, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
 
         },{     {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) - Triphasic Isc (A) = {{'%0.1f'|format(diagramInfo.tri_sc)}}',
+                label: '({{ns0.i}}) - Curto Circuito Trifásico (A) = {{'%0.1f'|format(diagramInfo.tri_sc)}}',
                 backgroundColor: 'orange',
                 data: [{x: {{diagramInfo.tri_sc}}, y: 0.01, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
 
         },{     {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) - Line Ground Isc (máx) (A) = {{'%0.1f'|format(diagramInfo.lg_sc_max)}}',
+                label: '({{ns0.i}}) - Curto Circuito Fase Terra (máx) (A) = {{'%0.1f'|format(diagramInfo.lg_sc_max)}}',
                 backgroundColor: 'orange',
                 data: [{x: {{diagramInfo.lg_sc_max}}, y: 0.01, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
 
         },{     {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) - Line Ground (min) Isc (A) = {{'%0.1f'|format(diagramInfo.lg_sc_min)}}',
+                label: '({{ns0.i}}) - Curto Circuito Fase Terra (min) Isc (A) = {{'%0.1f'|format(diagramInfo.lg_sc_min)}}',
                 backgroundColor: 'orange',
                 data: [{x: {{diagramInfo.lg_sc_min}}, y: 0.01, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
 
         },{     {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) - Magnetization Current (A) = {{'%0.1f'|format(diagramInfo.inrush)}}',
+                label: '({{ns0.i}}) - Corrente de Magnetização (A) = {{'%0.1f'|format(diagramInfo.inrush)}}',
                 backgroundColor: 'red',
                 data: [{x: {{diagramInfo.inrush}}, y: 0.1, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
@@ -290,14 +290,14 @@ Diagram
 
         ,{      {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) TR {{ns.tr_n}} Iansi current (A) = {{'%0.1f'|format(transformer.iansi)}}',
+                label: '({{ns0.i}}) TR {{ns.tr_n}} Corrente Iansi (A) = {{'%0.1f'|format(transformer.iansi)}}',
                 backgroundColor: 'red',
                 data: [{x: {{transformer.iansi}}, y: {{diagramInfo.iansi_time}}, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}
 
         },{     {% set ns0.i = ns0.i + 1 %}
                 type: 'bubble',
-                label: '({{ns0.i}}) TR {{ns.tr_n}} Inansi current (A) = {{'%0.1f'|format(transformer.inansi)}}',
+                label: '({{ns0.i}}) TR {{ns.tr_n}} Corrente Inansi (A) = {{'%0.1f'|format(transformer.inansi)}}',
                 backgroundColor: 'blue',
                 data: [{x: {{transformer.inansi}}, y: {{diagramInfo.iansi_time}}, r: dotRadius}],
                 datalabels: {formatter: function(value, context) {return "{{ns0.i}}"}}

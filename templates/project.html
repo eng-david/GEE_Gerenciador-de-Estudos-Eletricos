@@ -2,9 +2,9 @@
 
 {% block title %}
 {% if projectData.name %}
-Edit Project
+Editar Projeto
 {% else %}
-Create New Project
+Criar Novo Projeto
 {% endif %}
 {% endblock %}
 
@@ -41,10 +41,19 @@ Create New Project
         document.forms['projectFormAll'].submit();
     }
 
-    function deleteProject() {
-        if (confirm("Delete Project? all project data will be deleted!")) {
-            document.forms['deleteForm'].submit();
-        }
+    // function deleteProject() {
+    //     if (confirm("Delete Project? all project data will be deleted!")) {
+    //         document.forms['deleteForm'].submit();
+    //     }
+    // }
+
+    function showDeleteAlert() {
+        var x = document.getElementById("deletionAlert");
+        x.style.display = "block"
+    }
+    
+    function deleteFormSubmit(){
+        document.forms['deleteForm'].submit();
     }
 
     function addTr() {
@@ -71,17 +80,17 @@ Create New Project
 <ul class="nav justify-content-center">
     <li>
         <a class="nav-link" id="itemNavShowProject" onclick="showProjectForm()" href="#">
-            <h2>{% if projectData.name %}Edit Project{% else %}Create New Project{% endif %}</h2>
+            <h2>{% if projectData.name %}Editar Projeto{% else %}Create New Project{% endif %}</h2>
         </a>
     </li>
     <li>
         <a class="nav-link" id="itemNavShowTransformer" onclick="showTransformerForm()" href="#">
-            <h2>Power Transformers</h2>
+            <h2>Transformadores</h2>
         </a>
     </li>
     <li>
         <a class="nav-link" id="itemNavShowDiagram" style="color: gray" onclick="showDiagram()" href="#">
-            <h2>Diagram</h2>
+            <h2>Coordenograma</h2>
         </a>
     </li>
 </ul>
@@ -96,83 +105,83 @@ Create New Project
         <div id="projectForm">
 
             <div class="mb-3">
-                <label for="name" class="form-label">Project Name:</label>
+                <label for="name" class="form-label">Nome do Projeto:</label>
                 <input class="form-control " name="name" placeholder="name" type="text" {% if projectData %}
                     value="{{projectData.name}}" {% endif %}>
             </div>
 
             <!-- Customer Selector -->
             <div class="mb-3">
-                <label for="customer_id" class="form-label">Customer:</label>
+                <label for="customer_id" class="form-label">Cliente:</label>
                 <select class="form-select " name="customer_id">
-                    <option disabled="" {% if not projectData.customer_id %} selected="" {% endif %}>Customer</option>
+                    <option disabled="" {% if not projectData.customer_id %} selected="" {% endif %}>Cliente</option>
                     {% for customer in customersData %}
                     <option value="{{customer.id}}" {%if projectData.customer_id==customer.id %} selected="" {% endif
                         %}>
                         {{customer.name}}</option>
                     {% endfor %}
                 </select>
-                <div class="form-text">select a customer from the list above</div>
+                <div class="form-text">selecione um cliente na lista acima</div>
             </div>
 
 
             <!-- Profile Selector -->
             <div class="mb-5">
-                <label for="profile_id" class="form-label">Electric Profile:</label>
+                <label for="profile_id" class="form-label">Perfil Elétrico:</label>
                 <select class="form-select " name="profile_id">
-                    <option disabled="" {% if not projectData.profile_id %} selected="" {% endif %}>Profile</option>
+                    <option disabled="" {% if not projectData.profile_id %} selected="" {% endif %}>Perfil</option>
                     {% for profile in profilesData %}
                     <option value="{{profile.id}}" {%if projectData.profile_id==profile.id %} selected="" {% endif %}>
                         {{profile.name}}</option>
                     {% endfor %}
                 </select>
-                <div class="form-text">select an electric profile from the list above</div>
+                <div class="form-text">selecione um perfil na lista acima</div>
             </div>
 
             <div>
-                <h5 class="text-center">Site Data:</h5>
+                <h5 class="text-center">Dados de Fornecimento:</h5>
             </div>
 
             <div class="mb-3">
-                <label for="voltage" class="form-label">Line Voltage (kV):</label>
+                <label for="voltage" class="form-label">Tensão de Linha (kV):</label>
                 <input class="form-control " name="voltage" placeholder="0 v" type="number"
                     value="{{projectData.voltage}}">
             </div>
 
             <div class="mb-3">
-                <label for="demand" class="form-label">Demand (kW):</label>
+                <label for="demand" class="form-label">Demanda (kW):</label>
                 <input class="form-control " name="demand" placeholder="0 kw" type="number"
                     value="{{projectData.demand}}">
             </div>
 
             <div class="mb-5">
-                <label for="pf" class="form-label">Power Factor:</label>
+                <label for="pf" class="form-label">Fator de Potência:</label>
                 <input class="form-control " name="pf" placeholder="0.0" type="number" value="{{projectData.pf}}">
             </div>
 
             <div>
-                <h5 class="text-center">Short Circuit Fault Data:</h5>
+                <h5 class="text-center">Dados de Curto Circuito:</h5>
             </div>
 
             <div class="mb-3">
-                <label for="tri_sc" class="form-label">Trifasic Short Circuit (A):</label>
+                <label for="tri_sc" class="form-label">Curto Circuito Trifásico (A):</label>
                 <input class="form-control " name="tri_sc" placeholder="0 A" type="number"
                     value="{{projectData.tri_sc}}">
             </div>
 
             <div class="mb-3">
-                <label for="bi_sc" class="form-label">Bifasic Short Circuit (A):</label>
+                <label for="bi_sc" class="form-label">Curto Circuito Bifásico (A):</label>
                 <input class="form-control " name="bi_sc" placeholder="0 A" type="number" value="{{projectData.bi_sc}}">
             </div>
 
             <div class="mb-3">
-                <label for="lg_sc_max" class="form-label">Maximum Line Ground Short Circuit (A):</label>
+                <label for="lg_sc_max" class="form-label">Curto Circuito Monofásico Máximo (A):</label>
                 <input class="form-control " name="lg_sc_max" placeholder="0 A" type="number"
                     value="{{projectData.lg_sc_max}}">
             </div>
 
             <div class="mb-3">
-                <label for="lg_sc_min" class="form-label">Minimum Line Ground Short Circuit (A):</label>
+                <label for="lg_sc_min" class="form-label">Curto Circuito Monofásico Mínimo (A):</label>
                 <input class="form-control " name="lg_sc_min" placeholder="0 A" type="number"
                     value="{{projectData.lg_sc_min}}">
             </div>
@@ -192,34 +201,34 @@ Create New Project
 
                         <td>
                             <div>
-                                <h4 class="m-0 mt-5">transformer {{ns.i}}:</h4>
+                                <h4 class="m-0 mt-5">transformador {{ns.i}}:</h4>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div>
-                                <label for="kva" class="form-label">Power (kVA):</label>
+                                <label for="kva" class="form-label">Potência Nominal (kVA):</label>
                                 <input class="form-control" name="kva_{{transformer.id}}" placeholder="0 kVA"
                                     type="numeric" value="{{transformer.power_kva}}">
                             </div>
                         </td>
                         <td>
                             <div>
-                                <label for="impedance" class="form-label">Impedance (%):</label>
+                                <label for="impedance" class="form-label">Impedância (%):</label>
                                 <input class="form-control" name="impedance_{{transformer.id}}" placeholder="0 %"
                                     type="numeric" value="{{transformer.impedance}}">
                             </div>
                         </td>
                         <td>
                             <div>
-                                <label for="kva" class="form-label">Type:</label>
+                                <label for="kva" class="form-label">Tipo:</label>
                                 <select class="form-select " name="type_{{transformer.id}}">
                                     <option disabled="" {% if not transformer.type %} selected="" {% endif %}>
-                                        select type</option>
-                                    <option value=1 {% if transformer.type==1 %} selected="" {% endif %}>Dry Type
+                                        selecione o tipo</option>
+                                    <option value=1 {% if transformer.type==1 %} selected="" {% endif %}>a seco
                                     </option>
-                                    <option value=2 {% if transformer.type==2 %} selected="" {% endif %}>Oil Cooled
+                                    <option value=2 {% if transformer.type==2 %} selected="" {% endif %}>a óleo
                                     </option>
                                 </select>
                             </div>
@@ -236,8 +245,7 @@ Create New Project
                     {% endif %}
                     <tr>
                         <td>
-                            <button class="btn btn-primary mt-3" onclick="addTr()" id="btnAddTr">Add New
-                                Transformer</button>
+                            <button class="btn btn-primary mt-3" onclick="addTr()" id="btnAddTr">Novo Transformador</button>
                         </td>
                     </tr>
                 </tbody>
@@ -251,11 +259,16 @@ Create New Project
 </div>
 
 <div class="mb-3 w-75 mt-5 container">
-    <button class="btn btn-primary" onclick="saveProject()" id="btnSave">Save</button>
+    <button class="btn btn-primary" onclick="saveProject()" id="btnSave">Salvar</button>
 </div>
 
 <div class="mb-3 w-75 container" {% if not projectData %} style="display: none;" {% endif %}>
-    <button class="btn btn-danger" onclick="deleteProject()" id="btnDelete">Delete Project</button>
+    <button class="btn btn-danger" onclick="showDeleteAlert()" id="btnDelete">Deletar Projeto</button>
+</div>
+
+<div id="deletionAlert" class="mb-3 w-75 container" style="display: none;">
+    <h6>Tem certeza? o projeto será deletado.</h6>
+    <a class="btn btn-danger" onclick="deleteFormSubmit()">Deletar Projeto</a>
 </div>
 
 <div>
