@@ -1,5 +1,7 @@
 # Gerenciador de Estudos Elétricos
 
+<p align='center'><img src='logo/GEE_logo.png' width=240 alt='GEE logo'/></p>
+
 ## Descrição:
 
 Este aplicativo é destinado a profissionais do setor de eletricidade e permite o desenvolvimento de projetos e estudos elétricos relacionados a média e alta tensão.
