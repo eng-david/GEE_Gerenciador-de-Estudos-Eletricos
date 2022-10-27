@@ -61,6 +61,12 @@ pip install cs50
 ```sh
 pip install pywebview
 ```
+```sh
+pip install pythonnet==3.0.0a2
+```
+```sh
+pip install clr-loader==0.1.7
+```
 
 5. Iniciar o aplicativo:
 ```sh
