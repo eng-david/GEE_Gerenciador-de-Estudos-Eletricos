@@ -23,14 +23,20 @@ A partir dos dados de fornecimento o app gera automaticamente a análise relacio
 
 ## Instalação:
 Primeiramente é necessário ter o python instalado em seu computador.<br>
+
+1. Baixe ou faça o clone do repositório:
+```sh
+git clone https://github.com/eng-david/GEE_Gerenciador-de-Estudos-Eletricos.git
+```
+
 No diretório raiz da aplicação:
 
-1. Criar um ambiente virtual: 
+2. Crie um ambiente virtual: 
 ```sh
 python -m venv venv
 ```
 
-2. Ativar o ambiente virtual criado na etapa anterior:<br>
+3. Ativar o ambiente virtual criado na etapa anterior:<br>
 
 Linux / MacOS:
 
@@ -44,32 +50,17 @@ Windows:
 . venv\Scripts\activate
 ```
 
-3. Garantir que o ambiente tem o pip instalado:
+4. Garantir que o ambiente tem o pip instalado:
 ```sh
 python -m ensurepip
 ```
 
-4. Instalar as bibliotecas:
+5. Instalar as bibliotecas:
 ```sh
-pip install Flask
-```
-```sh
-pip install flask_session
-```
-```sh
-pip install cs50
-```
-```sh
-pip install pywebview
-```
-```sh
-pip install pythonnet==3.0.0a2
-```
-```sh
-pip install clr-loader==0.1.7
+pip install -r requirements.txt
 ```
 
-5. Iniciar o aplicativo:
+6. Iniciar o aplicativo:
 ```sh
 python app.py
 ```

@@ -1,4 +1,6 @@
 cs50
 Flask
 Flask-Session
-requests
+pywebview
+pythonnet==3.0.0a2
+clr-loader==0.1.7
