@@ -25,7 +25,8 @@
 
     <nav class="bg-light border navbar navbar-expand-md navbar-light">
         <div class="container-fluid">
-
+            <a class="navbar-brand" href="/"><span> <img class="logo" alt="HTML Logo"
+                src="{{url_for('static', filename='GEE_Logo_sm.jpg')}}"> </span></a>
             <div class="collapse navbar-collapse" id="navbar">
                 {% if session["user_id"] %}
                 <ul class="navbar-nav me-auto mt-2">
