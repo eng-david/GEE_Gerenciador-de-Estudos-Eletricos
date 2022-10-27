@@ -10,7 +10,7 @@ A partir dos dados de fornecimento o app gera automaticamente a análise relacio
  
 <br>
 
-## Estrtura de Diretórios:
+## Estrutura de Diretórios:
 - Pasta **static** contém os arquivos estáticos de CSS, Javascript, e imagens;
 - Pasta **templates** contém os arquivos HTML, desenvolvidos com Jinja template engine e chart.js para plotar o coordenograma;
 - Arquivo **app.py** é o arquivo principal do projeto, usa o framework Flask para o roteamento das paginas e backend;
@@ -64,7 +64,7 @@ pip install pywebview
 
 5. Iniciar o aplicativo:
 ```sh
-flask run
+python app.py
 ```
 A partir daí a janela do aplicativo será aberta.
 
@@ -92,6 +92,6 @@ Está incluso o calculo do ponto ANSI de cada transformador, as correntes nomina
 - `Jinja`
 - `SQLite`
 - `chart.js`
-- `Python Web View`
+- `Pywebview`
 
 
