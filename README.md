@@ -30,8 +30,7 @@ No diretório raiz da aplicação:
 python -m venv venv
 ```
 
-2. Ativar o ambiente virtual criado na etapa anterior:
-<br>
+2. Ativar o ambiente virtual criado na etapa anterior:<br>
 
 Linux / MacOS:
 
