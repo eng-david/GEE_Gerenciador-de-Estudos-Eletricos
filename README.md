@@ -82,7 +82,7 @@ Depois de salvar o projeto, é possível prosseguir para a pagina **coordenogram
 
 Está incluso o calculo do ponto ANSI de cada transformador, as correntes nominais e de magnetização, a análise relacionada as correntes instantâneas (ANSI 50/50N) e sobrecorrente de fase e neutro (ANSI 51/51N), e a curva do coordenograma da proteção.
 
-<p align='center'><img src='images/GEE_Demo.gif' width=480 alt='GEE GIF demo'/></p>
+<p align='center'><img src='images/GEE_demo.gif' width=480 alt='GEE GIF demo'/></p>
 
 <br>
   
