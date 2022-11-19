@@ -2,6 +2,8 @@
 
 <p align='center'><img src='logo/GEE_Logo_md.png' width=240 alt='GEE logo'/></p>
 
+![Development Status Badge](https://img.shields.io/badge/Status-Concluido-green)
+
 ## Descrição:
 
 Este aplicativo é destinado a profissionais do setor de eletricidade e permite o desenvolvimento de projetos e estudos elétricos relacionados a média e alta tensão.
